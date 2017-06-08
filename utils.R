@@ -26,7 +26,7 @@ splitOnUnclosedChar <- function(string, char, keep=FALSE) {
   stopifnot(is.character(string), is.character(char), nchar(char) == 1L,
             is.logical(keep))
   # split to single characters
-  chars <- strsplit(string, '', fixed=TRUE)[[1]]
+  chars <- strsplit(string, '', fixed=TRUE)[[1L]]
   # setup
   opbr <- 0L        # if opbr is zero we r not in a struct
   opqt <- 2L        # counts double quotes
@@ -50,7 +50,7 @@ splitOnUnclosedChar <- function(string, char, keep=FALSE) {
          all(unlist(nsqt) %% 2L == 0L))) {
       if (!keep) {
         accu <- append(accu, substr(string, last.cut + 1L, i - 1L))
-      } else {  # keep split character
+      } else if (keep) {  # keep split character
         # get pre
         accu <- append(accu, substr(string, last.cut + 1L, i - 1L))
         last.cut <- i - 1L
