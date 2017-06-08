@@ -1,6 +1,7 @@
 # capcin
 
 # TODO: -before playing captures make sure to pretty code with a formatr
+#       -simple static analysis - 2 make sure commmands are split correctly
 
 setup <- function() {
   
@@ -10,6 +11,9 @@ capture <- function(name) {
   stopifnot(isTruthyChr(name))
   # setup
   on.exit(try(unlink('csh.Rhistory')))
+  # regex 4 simple static analysis - matches common operators when line trailr
+  rexop <- paste0('(?:(?:<?<-)|(?:==?)|(?:&&?)|(?:\\|\\|?)|(?:%.*%?)|', 
+                  '\\+|-|/|(?:\\*\\*?)|\\<|\\>|\\^) *\\n')
   # write current session's history (csh) to disc
   savehistory('csh.Rhistory')
   # read back into memory
@@ -21,6 +25,7 @@ capture <- function(name) {
   # separate commands thru split on unclosed '\n'
   spl <- splitOnUnclosedChar(csh, '\n', keep=FALSE)
   # TODO: static analysis
+  print(any(grepl(rexop, spl, perl=TRUE)))
   # stringify to JSON
   xyz <- jsonlite::toJSON(spl)
   xyz
