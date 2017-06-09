@@ -2,6 +2,7 @@
 
 # TODO: -before playing captures make sure to pretty code with a formatr
 #       -simple static analysis - 2 make sure commmands are split correctly
+#       -layout data structure for transmission
 
 setup <- function() {
   
@@ -13,7 +14,7 @@ capture <- function(name) {
   on.exit(try(unlink('csh.Rhistory')))
   # regex 4 simple static analysis - matches common operators when line trailr
   rexop <- paste0('(?:(?:<?<-)|(?:==?)|(?:&&?)|(?:\\|\\|?)|(?:%.*%?)|', 
-                  '\\+|-|/|(?:\\*\\*?)|\\<|\\>|\\^) *\\n')
+                  '\\+|-|/|(?:\\*\\*?)|\\<|\\>|\\^)\\s*\\n$')
   # write current session's history (csh) to disc
   savehistory('csh.Rhistory')
   # read back into memory
