@@ -14,8 +14,8 @@ isTruthyChr <- function(x) {
   }
 }
 
-#' Splits a string on given character neither enclosed in brackets nor 
-#' double quotes
+#' Splits a string on given character neither enclosed in brackets, 
+#' parentheses nor double quotes
 #'
 #' @param string Character vector of length 1L.
 #' @param character Single character to split on.
@@ -35,8 +35,8 @@ splitOnUnclosedChar <- function(string, char, keep=FALSE) {
   accu <- vector('character')
   # peep through
   for (i in seq(length(chars))) {
-    if (chars[i] %in% c('[', '{')) opbr <- opbr + 1L
-    if (chars[i] %in% c(']', '}')) opbr <- opbr - 1L
+    if (chars[i] %in% c('[', '{', '(')) opbr <- opbr + 1L
+    if (chars[i] %in% c(']', '}', ')')) opbr <- opbr - 1L
     if (chars[i] == '"') opqt <- opqt + 1L
     if (grepl('\\\\+', chars[i], perl=TRUE) && chars[i + 1L] == '"') {
       if (!chars[i] %in% names(nsqt)) {
