@@ -1,7 +1,7 @@
 # dump_screen
 
 vlcAvailable <- function() {
-  return(ifelse(grepl('vlc', Sys.getenv('PATH'), TRUE, TRUE), TRUE, FALSE))
+  return(grepl('vlc', Sys.getenv('PATH'), TRUE, TRUE))
 }
 
 dumpScreen <- function() {
