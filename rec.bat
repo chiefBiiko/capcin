@@ -1,1 +1,0 @@
-vlc screen:// -I rc :sout=#transcode{vcodec=h264,vb=800,fps=30,scale=1.0}:std{access=file,dst=rec.mp4}
