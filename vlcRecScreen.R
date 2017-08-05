@@ -19,7 +19,10 @@ vlcAvailable <- function() {
 #' failure.
 #' 
 #' @export
-vlcRecScreen <- function(fname='rec', fps=30L, scale=1.) {
+vlcRecScreen <- function(fname='rec', fps=15L, scale=.5) {
+  stopifnot(is.character(fname), length(fname) == 1L, nchar(fname) > 0L,
+            is.numeric(fps), length(fps) == 1L, fps > 0L, fps %% 1L == 0L, 
+            is.numeric(scale), length(scale) == 1L)
   # check
   if (!vlcAvailable()) {
     stop('Please install VLC media player and add its ',
@@ -35,11 +38,7 @@ vlcRecScreen <- function(fname='rec', fps=30L, scale=1.) {
                             ':std{access=file,dst=%s.mp4}'), 
                      fps, scale, fname)
   # info
-  message('Type "quit" within vlc\'s command line to stop recording\n',
-          'Note: the last seconds of this recording will be cutoff by vlc\n', 
-          'so make sure not to quit right after you are done showcasing\n',
-          'rather hang tight for another ~20 seconds at the end, then quit!')
+  message('Recording...\nType "quit" in vlc\'s command line to stop recording')
   # start recording
-  return(system2(command=OS_SHELL, stdout=FALSE, stderr=FALSE, input=cmdline, 
-                 wait=TRUE, minimized=FALSE, invisible=TRUE))
+  return(system2(command=OS_SHELL, input=cmdline, stdout=FALSE, stderr=FALSE))
 }
