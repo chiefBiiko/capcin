@@ -5,9 +5,7 @@
 #' @return logical.
 #'
 #' @keywords internal
-vlcAvailable <- function() {
-  return(grepl('vlc', Sys.getenv('PATH'), TRUE, TRUE))
-}
+vlcAvailable <- function() grepl('vlc', Sys.getenv('PATH'), TRUE, TRUE)
 
 #' Start a screen recording with vlc media player
 #' 
@@ -15,14 +13,21 @@ vlcAvailable <- function() {
 #' @param fps integer. Frames per second.
 #' @param scale double. Scale factor to be applied to output video file.
 #' @return integer. Exit code, invisible. \code{127} if OS shell could not be 
-#' started. Otherwise exit code of vlc executable: \code{0} for success, \code{1} for 
-#' failure.
+#' started. Otherwise exit code of vlc executable: \code{0} for success, 
+#' \code{1} for failure.
+#' 
+#' @details VLC media player must be available on the system and the
+#' system's PATH environment variable. This piece of code will neither
+#' install VLC media player nor alter your PATH, you need to do this manually.
+#' 
+#' This func allows saving recordings to disk only, no streaming support. 
+#' The video format is mp4 by design rule. Recording audio is not suppported.
 #' 
 #' @export
-vlcRecScreen <- function(fname='rec', fps=15L, scale=.5) {
+vlcRecScreen <- function(fname='rec', scale=1., fps=15L) {
   stopifnot(is.character(fname), length(fname) == 1L, nchar(fname) > 0L,
             is.numeric(fps), length(fps) == 1L, fps > 0L, fps %% 1L == 0L, 
-            is.numeric(scale), length(scale) == 1L)
+            is.numeric(scale), length(scale) == 1L, scale >= 0L)
   # check
   if (!vlcAvailable()) {
     stop('Please install VLC media player and add its ',
